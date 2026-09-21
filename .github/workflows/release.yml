@@ -1,11 +1,11 @@
-name: Release Helm Charts to GHCR
+name: Release Helm Chart to GHCR
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'charts/**'
-      - '.github/workflows/release.yml'
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
   workflow_dispatch:
 
 permissions:
@@ -13,8 +13,8 @@ permissions:
   packages: write
 
 jobs:
-  publish-helm-charts:
-    name: Package and Push Helm Charts to GHCR
+  publish-helm-chart:
+    name: Package and Push Helm Chart to GHCR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,17 +37,13 @@ jobs:
           fi
           echo "$TOKEN" | helm registry login ghcr.io --username "${{ steps.owner.outputs.owner }}" --password-stdin
 
-      - name: Package Helm Charts
+      - name: Package Helm Chart
         run: |
           mkdir -p dist
-          for chart in charts/*; do
-            if [ -d "$chart" ]; then
-              echo "Packaging $chart..."
-              helm package "$chart" --destination dist/
-            fi
-          done
+          echo "Packaging chart at repository root..."
+          helm package . --destination dist/
 
-      - name: Push Helm Charts to GHCR
+      - name: Push Helm Chart to GHCR
         run: |
           for pkg in dist/*.tgz; do
             echo "Pushing $pkg to oci://ghcr.io/${{ steps.owner.outputs.owner }}..."
