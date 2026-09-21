@@ -1,0 +1,5 @@
+*.tgz
+dist/
+.cr-release-packages/
+.DS_Store
+*.swp
