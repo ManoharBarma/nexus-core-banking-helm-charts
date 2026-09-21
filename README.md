@@ -6,13 +6,13 @@ Standardized Helm chart template for the Nexus Core Banking microservices platfo
 
 | Chart | Description | Version | OCI Registry |
 |---|---|---|---|
-| `banking-app-standard-template` | Standard microservice deployment template | `1.0.0` | `oci://ghcr.io/manoharbarma/banking-app-standard-template` |
+| `nexus-core-banking` | Standard microservice deployment template | `1.0.0` | `oci://ghcr.io/manoharbarma/nexus-core-banking` |
 
 ## Usage with Helm
 
 ```bash
 # Pull the chart from GHCR
-helm pull oci://ghcr.io/manoharbarma/banking-app-standard-template --version 1.0.0
+helm pull oci://ghcr.io/manoharbarma/nexus-core-banking --version 1.0.0
 ```
 
 ## Usage with Argo CD
@@ -20,9 +20,10 @@ helm pull oci://ghcr.io/manoharbarma/banking-app-standard-template --version 1.0
 ```yaml
 sources:
   - repoURL: ghcr.io/manoharbarma
-    chart: banking-app-standard-template
+    chart: nexus-core-banking
     targetRevision: 1.0.0
     helm:
+      releaseName: '<service-name>'
       valueFiles:
         - $values/workloads/banking-apps/<service-name>/values.yaml
   - repoURL: https://github.com/ManoharBarma/k8s-platform-lab.git

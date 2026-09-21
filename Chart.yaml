@@ -1,5 +1,5 @@
 apiVersion: v2
-name: banking-app-standard-template
-description: Banking Applications Standard Template
+name: nexus-core-banking
+description: Nexus Core Banking Microservices Standard Helm Template
 version: 1.0.0
 appVersion: "1.0.0"
