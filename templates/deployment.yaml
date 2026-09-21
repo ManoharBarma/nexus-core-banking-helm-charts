@@ -31,7 +31,7 @@ spec:
       {{- if .Values.podSecurityContext }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- else }}
+      {{- else if not (hasKey .Values "podSecurityContext") }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
@@ -44,7 +44,7 @@ spec:
           {{- if .Values.containerSecurityContext }}
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
-          {{- else }}
+          {{- else if not (hasKey .Values "containerSecurityContext") }}
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
